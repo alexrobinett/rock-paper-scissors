@@ -1,6 +1,6 @@
 
 // DECLARE ROUND NUMBER AND KEEP TRACK
-
+let promptMessage = 'choose your weapon! Rock, Paper, or Scissors?'
 
 // GENERATE COMPUTERS CHOICE
 
@@ -19,30 +19,50 @@ function getComputerChoice(){
 
 // GET USERS CHOICE
 
+
+
+const computerSelection = getComputerChoice()
+
+// COMPARE CHOICES
 function playARound(playerSelection , computerSelection){
     let player = playerSelection.toLowerCase()
    
     if (player == computerSelection){
-        return "you tied the game"
+        return "Tied"
     } else if (player === "rock" && computerSelection === "paper" || player === "scissors" && computerSelection === "rock" || player=== "paper" && computerSelection=== "scissors" ){
-        return "you loose"
+        return "Looser"
     } else if (player === "rock" && computerSelection === "scissors" || player === "scissors" && computerSelection === "paper" || player === "paper" && computerSelection === "rock" ){
-        return "you win"
-    } else console.log(player)
+        return "Winner"
+    } else console.log("Tied")
 }
 
-const computerSelection = getComputerChoice()
-const playerSelection = "Scissors"
-
-console.log(playARound(playerSelection, computerSelection))
 
 
-// COMPARE CHOICES
+// KEEP TRACK OF SCORE Nad play rounds
 
+function Game(){
+    let compScore = 0
+    let playerScore = 0
 
+    for(let i = 0; i <= 5; i++){
+        let playerSelection =   prompt(promptMessage)
+        let computerSelection = getComputerChoice()
 
-// RETURN WHO WINS
+        if (playARound(playerSelection , computerSelection) === "Winner"){
+            console.log("You won a round!")
+            playerScore++
+        }else if (playARound(playerSelection , computerSelection) === "Looser"){
+            console.log("you lost a round")
+            compScore++
+        }else if (playARound(playerSelection , computerSelection) === "Tied"){
+            console.log("you tied this round")
+        }else console.log('error winner not met')
 
-
-
-// KEEP TRACK OF SCORE
+    }
+    
+    if (playerScore > compScore){
+        alert("your the winner")
+    }else if (playerScore < compScore){
+        alert("you loose!")
+    }
+}
