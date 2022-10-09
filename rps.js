@@ -1,6 +1,6 @@
 
 // DECLARE ROUND NUMBER AND KEEP TRACK
-let promptMessage = 'choose your weapon! Rock, Paper, or Scissors?'
+
 
 // GENERATE COMPUTERS CHOICE
 
@@ -8,20 +8,20 @@ function getComputerChoice(){
     let randomNum =  Math.floor(Math.random() * 4)
     if(randomNum === 1){
         return "rock"
-    }else if (randomNum === 3){
+    }else if (randomNum === 2){
         return "paper"
     }else if ( randomNum === 1){
         return "scissors"
     }else return "scissors"
 }
 
-
-
 // GET USERS CHOICE
 
+let compScore = 0
+let playerScore = 0
 
 
-const computerSelection = getComputerChoice()
+
 
 // COMPARE CHOICES
 function playARound(playerSelection , computerSelection){
@@ -38,31 +38,63 @@ function playARound(playerSelection , computerSelection){
 
 
 
-// KEEP TRACK OF SCORE Nad play rounds
+// KEEP TRACK OF SCORE and play rounds
 
-function Game(){
-    let compScore = 0
-    let playerScore = 0
+const playerScoreCounter = document.querySelector(".player-score")
+const computerScoreCounter = document.querySelector(".computer-score")
 
-    for(let i = 0; i <= 5; i++){
-        let playerSelection =   prompt(promptMessage)
-        let computerSelection = getComputerChoice()
+function keepScore(playerSelection,computerSelection){
 
-        if (playARound(playerSelection , computerSelection) === "Winner"){
-            console.log("You won a round!")
-            playerScore++
-        }else if (playARound(playerSelection , computerSelection) === "Looser"){
-            console.log("you lost a round")
-            compScore++
-        }else if (playARound(playerSelection , computerSelection) === "Tied"){
-            console.log("you tied this round")
-        }else console.log('error winner not met')
-
-    }
-    
-    if (playerScore > compScore){
-        alert("your the winner")
-    }else if (playerScore < compScore){
-        alert("you loose!")
-    }
+    if (playARound(playerSelection , computerSelection) === "Winner"){
+        console.log("You won a round!")
+        playerScore++
+        document.getElementById('player-score').innerHTML = playerScore;
+    }else if (playARound(playerSelection , computerSelection) === "Looser"){
+        console.log("you lost a round")
+        compScore++
+        document.getElementById('computer-score').innerHTML = compScore;
+    }else if (playARound(playerSelection , computerSelection) === "Tied"){
+        console.log("you tied this round")
+    }else console.log('error winner not met')
 }
+
+
+
+function CheckForWinner(playerScore,compScore){
+    if (playerScore === 5){
+        document.getElementById('win-lose').innerHTML = `You Won!`
+        return "winner"
+    }else if (compScore === 5){
+        document.getElementById('win-lose').innerHTML = `You Lost!`
+        return "winner"
+    }else return
+}
+
+
+    
+    
+const buttons = document.querySelectorAll("button")
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        let playerSelection = button.id
+        let computerSelection = getComputerChoice()
+        keepScore(playerSelection,computerSelection)
+        console.log(`Player: ${playerScore}`)
+        console.log(`Computer: ${compScore}`)
+        
+        if (CheckForWinner(playerScore,compScore)=== "winner"){
+            playerScore = 0
+            compScore = 0
+            document.getElementById('computer-score').innerHTML = compScore;
+            document.getElementById('player-score').innerHTML = playerScore;
+        }
+        
+        if (playerScore == 1 || compScore == 1){
+            document.getElementById('win-lose').innerHTML = ``
+        }
+
+    })
+})
+
+
